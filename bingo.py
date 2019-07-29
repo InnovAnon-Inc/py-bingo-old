@@ -1,12 +1,18 @@
 #! /usr/bin/python3
 
 from loop import Loop
+from win_type import WinType
 
 class Bingo(Loop):
 	def __init__(self):
 		Loop.__init__(self)
 	def loop(self):
 		pass
+
+
+
+
+
 #! /usr/bin/python3
 
 from random import shuffle
