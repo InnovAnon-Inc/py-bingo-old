@@ -31,17 +31,17 @@ class WinType:
 	@staticmethod
 	def check_diagY_win(isSelected, board, width, height):
 		K = min(width, height)
-		for Y in range(K - 1, height):
-			if sum([isSelected(board[y][y]) for y in range(min(Y+1, width))]) is K: return True
+		for Y in range(height - K + 1):
+			if sum([isSelected(board[Y + y][y]) for y in range(K)]) is K: return True
 		return False
 	@staticmethod
-	def check_diagX_win(isSelected, board, width, height): return WinType.check_diagY_win(isSelected, list(zip(*board)), width, height)
+	def check_diagX_win(isSelected, board, width, height): return WinType.check_diagY_win(isSelected, list(zip(*board)), height, width)
 	@staticmethod
 	def check_diag_win(isSelected, board, width, height): return WinType.check_diagY_win(isSelected, board, width, height) or WinType.check_diagX_win(isSelected, board, width, height)
 	@staticmethod
 	def check_diagY2_win(isSelected, board, width, height): return WinType.check_diagY_win(isSelected, [row[::-1] for row in board], width, height)
 	@staticmethod
-	def check_diagX2_win(isSelected, board, width, height): return WinType.check_diagY2_win(isSelected, list(zip(*board)), width, height)
+	def check_diagX2_win(isSelected, board, width, height): return WinType.check_diagY2_win(isSelected, list(zip(*board)), height, width)
 	@staticmethod
 	def check_diag2_win(isSelected, board, width, height): return WinType.check_diagY2_win(isSelected, board, width, height) or WinType.check_diagX2_win(isSelected, board, width, height)
 	@staticmethod
@@ -97,18 +97,41 @@ if __name__ == "__main__":
 		[ 6,  7,  8,  9, 10],
 		[11, 12, 13, 14, 15],
 		[16, 17, 18, 19, 20]]
-	print("board: %s" % (board,))
+	def toString(board): return "\n".join([" ".join(["%2s" % x for x in row]) for row in board])
+	print("board:\n%s\n" % (toString(board),))
 
-	row = [3, 8, 13, 18]
-	col = [11, 12, 13, 14, 15]
+	col = [3, 8, 13, 18]
+	row = [11, 12, 13, 14, 15]
+	t   = row + col
 	d1  = [1, 7, 13, 19]
 	d2  = [16, 12, 8, 4]
 	d3  = [2, 8, 14, 20]
 	d4  = [5, 9, 13, 17]
-	
-	for history in [row, col, d1, d2, d3, d4, row + col, d1 + d2, d3 + d4, d1 + d4, d2 + d3]:
-		print("history: %s" % (history,))
-		for wt in [WinType.ROW, WinType.COL, WinType.DIAG, WinType.TEXAS_T, WinType.ST_ANDREW, WinType.BLACKOUT]:
-			win = WinType.isWin(wt, history, board, 5, 4)
-			print("%s: %s", (WinType.toString(wt), win))
+	x1  = d1 + d2
+	x2  = d3 + d4
+	x3  = d1 + d4
+	x4  = d2 + d3
 
+	def expect(win, expected, history):
+		actual = WinType.isWin(win, history, board, 5, 4)
+		if actual == expected: return
+		print("%5s =?= %5s: %s" % (actual, expected, WinType.toString(win)))
+	def check(history):
+		print("history: %s" % (history,))
+		wins   = []
+		if history is row: wins.append(WinType.ROW)
+		if history is col: wins.append(WinType.COL)
+		if history is t:   wins = wins + [WinType.ROW, WinType.COL, WinType.TEXAS_T]
+		if history is d1:  wins.append(WinType.DIAG)
+		if history is d2:  wins.append(WinType.DIAG)
+		if history is d3:  wins.append(WinType.DIAG)
+		if history is d4:  wins.append(WinType.DIAG)
+		if history is x1:  wins = wins + [WinType.DIAG, WinType.ST_ANDREW]
+		if history is x2:  wins = wins + [WinType.DIAG, WinType.ST_ANDREW]
+		if history is x3:  wins = wins + [WinType.DIAG, WinType.ST_ANDREW]
+		if history is x4:  wins = wins + [WinType.DIAG, WinType.ST_ANDREW]
+		losses = [wt for wt in [WinType.ROW, WinType.COL, WinType.DIAG, WinType.TEXAS_T, WinType.ST_ANDREW, WinType.BLACKOUT] if wt not in wins]
+		for win  in wins:   expect(win, True,   history)
+		for loss in losses: expect(loss, False, history)
+	for history in [row, col, t, d1, d2, d3, d4, x1, x2, x3, x4]:
+		check(history)
