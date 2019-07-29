@@ -2,11 +2,11 @@
 
 from time import gmtime, sleep, strftime
 
-from game    import Game
-from games   import Games
-from game_io import GameIO
-from lobby   import Lobby
-from loop    import Loop
+from server.game    import Game
+from server.games   import Games
+from server.game_io import GameIO
+from server.lobby   import Lobby
+from common.loop    import Loop
 
 class GameServer(Loop):
 	def __init__(self, MyGame, min_n=1, max_n=100, polling_timeout=5, max_timeout=60, port=4321, timeout=None):

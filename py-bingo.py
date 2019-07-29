@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
-from client import Client
-from server import Server
+from py_client import Client
+from py_server import Server
 
 if __name__ == "__main__":
 	s = Server()

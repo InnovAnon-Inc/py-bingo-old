@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 
-from server_io import ServerIO
+from server.server_io import ServerIO
 
 class GameIO(ServerIO):
 	def __init__(self, lobby, port=9009, timeout=None):

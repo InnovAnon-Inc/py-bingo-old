@@ -4,7 +4,7 @@ from abc import ABCMeta
 from abc import abstractmethod
 from time import gmtime, strftime
 
-from loop import Loop
+from common.loop import Loop
 
 class Game(Loop, metaclass=ABCMeta):
 	def __init__(self, players):

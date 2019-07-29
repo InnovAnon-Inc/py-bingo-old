@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
-from bingo       import Bingo
-from game_server import GameServer
+from server.bingo       import Bingo
+from server.game_server import GameServer
 
 class Server(GameServer):
 	def __init__(self, port=9617, timeout=None):
