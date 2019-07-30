@@ -8,8 +8,9 @@ class Player(object):
 		self.name    = name
 		self.sock    = sock
 		self.history = []
+		self.board   = None
 	def toStringI(self, history, x): return "%3s" % ("X" if WinType.isSelected(x, history) else x,)
-	def toString(self, history): return "\n".join([" ".join([self.toStringI(history, x) for x in row]) for row in self.board])
+	def toString(self, history): return "\n".join([" ".join([self.toStringI(history, x) for x in row]) for row in self.board]) if self.board else None
 	def __repr__(self): return "Player(name=%s, sock=%s); board=\n%s\n" % (self.name, self.sock, self.toString(self.history))
 	def createBoard(self, width, height, extra):
 		lotto = Lotto.getLotto(width, height, extra)

@@ -75,7 +75,7 @@ if __name__ == "__main__":
 	from threading import Thread
 	from time import strftime, gmtime
 
-	from loop   import Loop
+	from common.loop   import Loop
 	from player import Player
 
 	lobby = Lobby()

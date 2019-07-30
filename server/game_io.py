@@ -22,7 +22,7 @@ class GameIO(ServerIO):
 		self.lobby.removePlayer(sock)
 		
 if __name__ == "__main__":
-	from loop_test import LoopTest
+	from common.loop_test import LoopTest
 	from lobby import Lobby
 
 	lobby = Lobby()
