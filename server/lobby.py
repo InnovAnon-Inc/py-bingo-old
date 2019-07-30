@@ -9,11 +9,13 @@ class Lobby(object):
 		self.lock  = Lock()
 		self.alive = True
 	def addPlayer(self, sock, player):
+		print("lobby.addPlayer(%s, %s)" % (sock, player))
 		try:
 			self.lock.acquire()
 			self.data[sock] = player
 		finally: self.lock.release()
 	def removePlayer(self, sock):
+		print("lobby.removePlayer(%s)" % (sock,))
 		try:
 			self.lock.acquire()
 			p = self.data[sock]
@@ -21,6 +23,7 @@ class Lobby(object):
 		finally: self.lock.release()
 		return p
 	def getPlayers(self, min_n=2, max_n=10, timeout=1, max_timeout=None):
+		print("lobby.getPlayers()")
 		total_timeout = 0
 		players       = []
 		timeout_flag  = False
@@ -41,6 +44,7 @@ class Lobby(object):
 				if m: timeout_flag = False
 			finally: self.lock.release()
 
+			print("done polling; players: %s" % (players,))
 			if isEnoughPlayers(): break
 
 			if max_timeout:

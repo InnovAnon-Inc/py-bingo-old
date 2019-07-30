@@ -1,12 +1,16 @@
 #! /usr/bin/python3
 
-from common.loop import Loop
+from client.game_client import GameClient
+from common.loop        import Loop
 
-class Client(Loop):
-	#def __init__(self): Loop.__init__(self)
-	def loop(self):
-		pass
-	#def stop(self): Loop.stop(self)
+class Client(GameClient):
+	def __init__(self, port=9617):
+		GameClient.__init__(self, serverport=port)
+	def display(self, msg):
+		# TODO
+		print(msg)
 
 if __name__ == "__main__":
-	pass
+	c = Client()
+	c.start()
+	c.join()

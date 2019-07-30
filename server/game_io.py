@@ -6,10 +6,10 @@ class GameIO(ServerIO):
 	def __init__(self, lobby, port=9009, timeout=None):
 		ServerIO.__init__(self, port=port, timeout=timeout)
 		self.lobby = lobby
-	def onInit(self, PORT):
-		ServerIO.onInit(self, PORT)
+	#def onInit(self, PORT):
+	#	ServerIO.onInit(self, PORT)
 	def onClientConnect(self, sock, addr):
-		ServerIO.onInit(self, sock, addr)
+		ServerIO.onClientConnect(self, sock, addr)
 		self.lobby.addPlayer(sock, Player(sock))
 	def onClientMessage(self, sock, data):
 		if data.startsWith("/msg "):

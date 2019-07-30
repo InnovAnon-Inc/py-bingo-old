@@ -20,6 +20,7 @@ class Player(object):
 	def doMove(self, move):
 		self.history.append(move)
 		# TODO
+		print("doMove(%s)" % move)
 		self.sock.send(str(self))
 		pass
 	def checkWin(self, history): return WinType.isWin(self.wc, history, self.board, self.width, self.height)
